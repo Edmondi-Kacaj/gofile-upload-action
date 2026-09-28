@@ -1,6 +1,6 @@
 # Upload to Gofile.io
 
-[![CI](https://github.com/OWNER/gofile-upload-action/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/gofile-upload-action/actions/workflows/ci.yml)
+[![CI](https://github.com/Edmondi-Kacaj/gofile-upload-action/actions/workflows/ci.yml/badge.svg)](https://github.com/Edmondi-Kacaj/gofile-upload-action/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 GitHub Action that uploads files or folders to [Gofile.io](https://gofile.io).
@@ -17,7 +17,7 @@ GitHub Action that uploads files or folders to [Gofile.io](https://gofile.io).
 
 ```yaml
 - name: Upload to Gofile
-  uses: OWNER/gofile-upload-action@v1
+  uses: Edmondi-Kacaj/gofile-upload-action@v1
   id: gofile
   with:
     path: dist/**
@@ -75,7 +75,7 @@ GitHub Action that uploads files or folders to [Gofile.io](https://gofile.io).
 **Guest**
 
 ```yaml
-- uses: OWNER/gofile-upload-action@v1
+- uses: Edmondi-Kacaj/gofile-upload-action@v1
   with:
     path: |
       build/**
@@ -85,7 +85,7 @@ GitHub Action that uploads files or folders to [Gofile.io](https://gofile.io).
 **Token + password + expiry**
 
 ```yaml
-- uses: OWNER/gofile-upload-action@v1
+- uses: Edmondi-Kacaj/gofile-upload-action@v1
   with:
     path: release/*
     token: ${{ secrets.GOFILE_TOKEN }}
@@ -99,7 +99,7 @@ GitHub Action that uploads files or folders to [Gofile.io](https://gofile.io).
 **Existing folder**
 
 ```yaml
-- uses: OWNER/gofile-upload-action@v1
+- uses: Edmondi-Kacaj/gofile-upload-action@v1
   with:
     path: report.pdf
     token: ${{ secrets.GOFILE_TOKEN }}
