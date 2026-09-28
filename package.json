@@ -8,7 +8,8 @@
     "package": "npm run build",
     "test": "node --import tsx --test __tests__/**/*.test.ts",
     "lint": "tsc --noEmit",
-    "all": "npm run lint && npm run test && npm run build"
+    "all": "npm run lint && npm run test && npm run build",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,7 @@
     "@types/node": "^22.10.0",
     "@vercel/ncc": "^0.38.3",
     "tsx": "^4.19.2",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "husky": "^8.0.0"
   }
 }
