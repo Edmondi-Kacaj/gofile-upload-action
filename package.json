@@ -1,0 +1,45 @@
+{
+  "name": "gofile-upload-action",
+  "version": "1.0.0",
+  "description": "GitHub Action to upload files and folders to Gofile.io",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "ncc build src/index.ts -o dist --source-map --license licenses.txt",
+    "package": "npm run build",
+    "test": "node --import tsx --test __tests__/**/*.test.ts",
+    "lint": "tsc --noEmit",
+    "all": "npm run lint && npm run test && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Edmondi-Kacaj/gofile-upload-action.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Edmondi-Kacaj/gofile-upload-action/issues"
+  },
+  "homepage": "https://github.com/Edmondi-Kacaj/gofile-upload-action#readme",
+  "keywords": [
+    "github-actions",
+    "gofile",
+    "upload",
+    "artifacts",
+    "ci"
+  ],
+  "author": "Edmond Kacaj <info@edmondkacaj.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/glob": "^0.5.0",
+    "archiver": "^7.0.1"
+  },
+  "devDependencies": {
+    "@types/archiver": "^6.0.3",
+    "@types/node": "^22.10.0",
+    "@vercel/ncc": "^0.38.3",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

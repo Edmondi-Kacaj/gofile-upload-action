@@ -1,0 +1,127 @@
+name: "Upload to Gofile.io"
+description: >
+  Upload files or folders to gofile.io. Supports guest uploads, optional
+  compression, password protection, expiry, and regional endpoints.
+author: "Edmond Kacaj <info@edmondkacaj.com>"
+
+branding:
+  icon: "upload-cloud"
+  color: "blue"
+
+inputs:
+  path:
+    description: "File, directory, or glob (multi-line; use ! for exclusions)."
+    required: true
+
+  folder-name:
+    description: "Folder name on Gofile. Defaults to the repository name."
+    required: false
+
+  name:
+    description: "Archive file name (without extension). Defaults to folder-name."
+    required: false
+
+  token:
+    description: "Gofile API token (e.g. secrets.GOFILE_TOKEN). Omit for guest upload."
+    required: false
+
+  folder-id:
+    description: "Existing folder UUID. Requires a token. If omitted, the account root is used."
+    required: false
+
+  compression:
+    description: "auto | none | zip | tar.gz. auto zips when more than one path is matched."
+    required: false
+    default: "auto"
+
+  compression-level:
+    description: "Compression level 0–9 (zip / tar.gz only)."
+    required: false
+    default: "6"
+
+  if-no-files-found:
+    description: "warn | error | ignore"
+    required: false
+    default: "warn"
+
+  include-hidden-files:
+    description: "Include dotfiles when globbing."
+    required: false
+    default: "false"
+
+  region:
+    description: "auto | eu-par | na-phx | na-nyc | ap-sgp | ap-hkg | ap-tyo | ap-syd | sa-sao"
+    required: false
+    default: "auto"
+
+  access:
+    description: "public | private | password"
+    required: false
+    default: "public"
+
+  public:
+    description: "Legacy alias. Set to false for access=private."
+    required: false
+    default: "true"
+
+  password:
+    description: "Folder password (4–100 chars). Implies access=password. Masked in logs."
+    required: false
+
+  expiry:
+    description: "Unix timestamp or relative duration (7d, 24h, 30m)."
+    required: false
+
+  direct-link:
+    description: "Request a Premium direct link when available."
+    required: false
+    default: "false"
+
+  working-directory:
+    description: "Base directory for path resolution."
+    required: false
+    default: "."
+
+  max-retries:
+    description: "Max HTTP retries on rate-limit / server errors."
+    required: false
+    default: "3"
+
+  initial-retry-delay-ms:
+    description: "Initial retry delay in milliseconds (exponential backoff)."
+    required: false
+    default: "1000"
+
+outputs:
+  download-page:
+    description: "Download page URL."
+  share-url:
+    description: "Alias of download-page."
+  code:
+    description: "Folder share code."
+  file-id:
+    description: "Primary file UUID."
+  parent-folder:
+    description: "Folder UUID."
+  parent-folder-code:
+    description: "Folder share code."
+  folder-name:
+    description: "Folder name used."
+  guest-token:
+    description: "Guest token when no token was provided (masked)."
+  size:
+    description: "Total bytes uploaded."
+  md5:
+    description: "Primary file MD5."
+  is-public:
+    description: "true | false"
+  access:
+    description: "public | private | password"
+  direct-link:
+    description: "Direct download URL when available."
+  file-count:
+    description: "Number of files uploaded."
+
+runs:
+  using: "node20"
+  main: "dist/index.js"

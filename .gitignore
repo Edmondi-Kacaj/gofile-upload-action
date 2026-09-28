@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Build
+lib/
+*.tsbuildinfo
+
+# Logs & OS
+*.log
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Test / coverage
+coverage/
+.nyc_output/
+
+# Temporary archives created at runtime
+*.zip
+*.tar.gz
+!dist/**
+
+# licensed may write temp files
+.licenses/**/*.tmp
+package-lock.json
+npm-debug.log

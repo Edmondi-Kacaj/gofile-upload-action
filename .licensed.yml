@@ -1,0 +1,24 @@
+sources:
+  npm: true
+
+apps:
+  - source: .
+    name: gofile-upload-action
+
+allowed:
+  - mit
+  - apache-2.0
+  - bsd-2-clause
+  - bsd-3-clause
+  - isc
+  - 0bsd
+  - cc0-1.0
+  - unlicense
+
+ignored:
+  npm:
+    # generated / private
+    - gofile-upload-action
+
+# Cache reviewed license texts under .licenses/
+cache_path: .licenses
