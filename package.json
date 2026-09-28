@@ -6,7 +6,7 @@
   "scripts": {
     "build": "ncc build src/index.ts -o dist --source-map --license licenses.txt",
     "package": "npm run build",
-    "test": "node --import tsx --test '__tests__/**/*.test.ts'",
+    "test": "node --import tsx --test __tests__/*.test.ts",
     "lint": "tsc --noEmit",
     "all": "npm run lint && npm run test && npm run build",
     "prepare": "husky install"
