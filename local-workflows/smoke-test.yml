@@ -1,0 +1,216 @@
+# LOCAL ONLY — not under .github/workflows, so GitHub Actions never runs this.
+# Use with act:
+#   act workflow_dispatch -W local-workflows/smoke-test.yml
+#
+# Manual smoke tests against real Gofile (guest uploads — no token required).
+# Actions tab → Smoke test → Run workflow
+name: Smoke test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  # ── single file, no compression ───────────────────────────────────
+  upload-none:
+    name: compression=none
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci && npm run build
+
+      - name: Upload README (no compression)
+        id: gofile
+        uses: ./
+        with:
+          path: README.md
+          compression: none
+          folder-name: smoke-none
+
+      - name: Check outputs
+        run: |
+          echo "download-page=${{ steps.gofile.outputs.download-page }}"
+          echo "file-count=${{ steps.gofile.outputs.file-count }}"
+          test -n "${{ steps.gofile.outputs.download-page }}"
+          test "${{ steps.gofile.outputs.file-count }}" = "1"
+
+  # ── zip ───────────────────────────────────────────────────────────
+  upload-zip:
+    name: compression=zip
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci && npm run build
+
+      - name: Upload as zip
+        id: gofile
+        uses: ./
+        with:
+          path: |
+            README.md
+            LICENSE
+          compression: zip
+          name: smoke-bundle
+          folder-name: smoke-zip
+
+      - name: Check outputs
+        run: |
+          echo "download-page=${{ steps.gofile.outputs.download-page }}"
+          echo "file-count=${{ steps.gofile.outputs.file-count }}"
+          test -n "${{ steps.gofile.outputs.download-page }}"
+          test "${{ steps.gofile.outputs.file-count }}" = "1"
+
+  # ── tar.gz ────────────────────────────────────────────────────────
+  upload-tar-gz:
+    name: compression=tar.gz
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci && npm run build
+
+      - name: Upload as tar.gz
+        id: gofile
+        uses: ./
+        with:
+          path: README.md
+          compression: tar.gz
+          name: smoke-tarball
+          folder-name: smoke-targz
+
+      - name: Check outputs
+        run: |
+          echo "download-page=${{ steps.gofile.outputs.download-page }}"
+          test -n "${{ steps.gofile.outputs.download-page }}"
+
+  # ── auto (multiple paths → should zip) ────────────────────────────
+  upload-auto:
+    name: compression=auto (multi-file)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci && npm run build
+
+      - name: Upload with auto compression
+        id: gofile
+        uses: ./
+        with:
+          path: |
+            README.md
+            LICENSE
+            package.json
+          compression: auto
+          folder-name: smoke-auto
+
+      - name: Check outputs
+        run: |
+          echo "download-page=${{ steps.gofile.outputs.download-page }}"
+          echo "file-count=${{ steps.gofile.outputs.file-count }}"
+          test -n "${{ steps.gofile.outputs.download-page }}"
+          # auto with >1 path produces one archive
+          test "${{ steps.gofile.outputs.file-count }}" = "1"
+
+  # ── no files: ignore (must succeed) ───────────────────────────────
+  no-files-ignore:
+    name: if-no-files-found=ignore
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci && npm run build
+
+      - name: Path matches nothing — ignore
+        id: gofile
+        uses: ./
+        with:
+          path: this-file-does-not-exist-xyz.dat
+          if-no-files-found: ignore
+          compression: none
+
+      - name: Should not fail; outputs empty
+        run: |
+          echo "download-page='${{ steps.gofile.outputs.download-page }}'"
+          echo "Job succeeded with no matching files (ignore)."
+
+  # ── no files: warn (must succeed, warning in log) ─────────────────
+  no-files-warn:
+    name: if-no-files-found=warn
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci && npm run build
+
+      - name: Path matches nothing — warn
+        id: gofile
+        uses: ./
+        with:
+          path: also-missing-abc.dat
+          if-no-files-found: warn
+          compression: none
+
+      - name: Should not fail
+        run: echo "Job succeeded with warning (check logs above)."
+
+  # ── no files: error (must fail the step) ──────────────────────────
+  no-files-error:
+    name: if-no-files-found=error
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - run: npm ci && npm run build
+
+      - name: Path matches nothing — error (expected failure)
+        id: gofile
+        continue-on-error: true
+        uses: ./
+        with:
+          path: missing-and-should-fail.dat
+          if-no-files-found: error
+          compression: none
+
+      - name: Assert step failed
+        run: |
+          if [ "${{ steps.gofile.outcome }}" != "failure" ]; then
+            echo "Expected the upload step to fail, got: ${{ steps.gofile.outcome }}"
+            exit 1
+          fi
+          echo "Step failed as expected when if-no-files-found=error."
