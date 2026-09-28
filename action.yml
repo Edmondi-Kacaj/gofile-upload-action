@@ -1,7 +1,5 @@
-name: "Upload to Gofile.io"
-description: >
-  Upload files or folders to gofile.io. Supports guest uploads, optional
-  compression, password protection, expiry, and regional endpoints.
+name: "Gofile Upload"
+description: "Upload files or folders to Gofile.io. Guest or token auth, optional zip, share URL outputs."
 author: "Edmond Kacaj <info@edmondkacaj.com>"
 
 branding:
