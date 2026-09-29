@@ -1,4 +1,4 @@
-name: "Gofile Upload"
+name: "Gofile Upload Action"
 description: "Upload files or folders to Gofile.io. Guest or token auth, optional zip, share URL outputs."
 author: "Edmond Kacaj <info@edmondkacaj.com>"
 
