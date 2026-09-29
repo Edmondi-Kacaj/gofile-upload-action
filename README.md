@@ -1,7 +1,8 @@
 # Upload to Gofile.io
+# Upload to Gofile.io
 
-[![CI](https://github.com/Edmondi-Kacaj/gofile-upload-action/actions/workflows/ci.yml/badge.svg)](https://github.com/Edmondi-Kacaj/gofile-upload-action/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![CI](https://github.com/Edmondi-Kacaj/gofile-upload-action/actions/workflows/ci.yml/badge.svg)](https://github.com/Edmondi-Kacaj/gofile-upload-action/actions/workflows/ci.yml) [![GitHub Release](https://img.shields.io/github/v/release/Edmondi-Kacaj/gofile-upload-action?color=blue)](https://github.com/Edmondi-Kacaj/gofile-upload-action/releases) [![Node.js](https://img.shields.io/badge/node.js-%3E%3D20-brightgreen?logo=node.js)](https://nodejs.org/) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 
 GitHub Action that uploads files or folders to [Gofile.io](https://gofile.io).
 
@@ -139,3 +140,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 ## License
 
 MIT — [LICENSE](LICENSE).
+
+
+---
+
+<a href="https://www.buymeacoffee.com/edka" target="_blank">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me a Coffee" height="50">
+</a>
