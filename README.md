@@ -137,6 +137,19 @@ npm run build   # → dist/index.js
 
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
+## Releases
+
+Push a version tag such as `v2.0.1` to build the action and update the floating
+major tag (`v2`). The workflow creates or updates one GitHub release per major
+version, named `Release v2`, instead of creating a release for each patch.
+Users can use `Edmondi-Kacaj/gofile-upload-action@v2` to follow that major version.
+Tags that do not match `vMAJOR.MINOR.PATCH` retain their own release tag and name.
+
+To publish a major-version release to GitHub Marketplace, edit that release on
+GitHub and select **Publish this Action to the GitHub Marketplace**. Updating the
+tag alone does not publish a Marketplace release. Existing patch releases are
+not removed; patch-specific release notes are no longer kept in separate releases.
+
 ## License
 
 MIT — [LICENSE](LICENSE).
